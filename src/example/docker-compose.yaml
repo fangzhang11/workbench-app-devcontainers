@@ -14,6 +14,8 @@ services:
     # Workbench UI.
     ports:
       - 8888:8888
+    # Disable token authentication for Workbench proxy
+    command: ["start-notebook.sh", "--ServerApp.token=''", "--ServerApp.password=''"]
     # The service must be connected to the "app-network" Docker network
     networks:
       - app-network
