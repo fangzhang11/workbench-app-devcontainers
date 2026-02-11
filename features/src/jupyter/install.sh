@@ -965,8 +965,6 @@ if [ "${INSTALL_JUPYTERLAB}" = "true" ]; then
         # Explicitly disable token and password authentication as we are behind a proxy
         add_user_jupyter_config "$CONFIG_DIR" "$CONFIG_FILE" "c.ServerApp.token = ''"
         add_user_jupyter_config "$CONFIG_DIR" "$CONFIG_FILE" "c.ServerApp.password = ''"
-        # Ensure no token is generated or used
-        add_user_jupyter_config "$CONFIG_DIR" "$CONFIG_FILE" "c.ServerApp.allow_remote_access = True"
 
         # Set the root directory and notebook directory to the user's home directory
         add_user_jupyter_config "$CONFIG_DIR" "$CONFIG_FILE" "c.ServerApp.root_dir = '/home/${USERNAME}'"
