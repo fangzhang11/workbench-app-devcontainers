@@ -536,6 +536,7 @@ readonly GOOGLE_PROJECT
 
 # PET_SA_EMAIL is the pet service account for the Workbench user and
 # is specific to the GCP project backing the workspace
+# Note: This is kept for backward compatibility but not used for authentication
 PET_SA_EMAIL="$(
   ${RUN_AS_LOGIN_USER} "wb auth status --format=json" | \
   jq --raw-output ".serviceAccountEmail")"
@@ -547,8 +548,7 @@ readonly PET_SA_EMAIL
 # WORKBENCH_USER_EMAIL is the Workbench user account email address.
 # GOOGLE_CLOUD_PROJECT is the project id for the GCP project backing the
 # workspace.
-# GOOGLE_SERVICE_ACCOUNT_EMAIL is the pet service account for the Workbench user
-# and is specific to the GCP project backing the workspace.
+# GOOGLE_SERVICE_ACCOUNT_EMAIL uses the user's own identity instead of service account
 
 emit "Adding Workbench environment variables to ~/.bashrc ..."
 
@@ -562,7 +562,8 @@ export PET_SA_EMAIL='${PET_SA_EMAIL}'
 # Set up a few Workbench-specific convenience variables
 export WORKBENCH_USER_EMAIL='${OWNER_EMAIL}'
 export GOOGLE_CLOUD_PROJECT='${GOOGLE_PROJECT}'
-export GOOGLE_SERVICE_ACCOUNT_EMAIL='${PET_SA_EMAIL}'
+# Use user's own identity instead of service account
+export GOOGLE_SERVICE_ACCOUNT_EMAIL='${OWNER_EMAIL}'
 EOF
 
 #############################

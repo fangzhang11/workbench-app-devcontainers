@@ -33,6 +33,7 @@ if [[ "${LOG_IN}" == "true" ]]; then
 
   # PET_SA_EMAIL is the pet service account for the Workbench user and
   # is specific to the GCP project backing the workspace
+  # Note: This is kept for backward compatibility but not used for authentication
   PET_SA_EMAIL="$(
     ${RUN_AS_LOGIN_USER} "'${WORKBENCH_INSTALL_PATH}' auth status --format=json" | \
     jq --raw-output ".serviceAccountEmail")"
@@ -46,7 +47,8 @@ export PET_SA_EMAIL='${PET_SA_EMAIL}'
 
 # Set up workbench-specific convenience variables
 export WORKBENCH_USER_EMAIL='${OWNER_EMAIL}'
-export GOOGLE_SERVICE_ACCOUNT_EMAIL='${PET_SA_EMAIL}'
+# Use user's own identity instead of service account
+export GOOGLE_SERVICE_ACCOUNT_EMAIL='${OWNER_EMAIL}'
 EOF
 
 else
